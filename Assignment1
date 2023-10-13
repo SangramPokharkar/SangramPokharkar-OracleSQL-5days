@@ -1,0 +1,43 @@
+create table gym_members( id number(5) primary key, name varchar2(20) not null, age number(3) not null check(age>0), joining_date date,
+expiration_date date, cost number(5) not null, city varchar2(30) default 'mumbai' not null, height number(3), weight number(3), created_at date
+default sysdate );
+_____________________________________________________________________________________________________________________
+create sequence gym_seq start with 1 increment by 1;
+_____________________________________________________________________________________________________________________
+insert into gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values (gym_seq.nextval,'Raj',22,'23-oct-2023','12-
+nov-2023',15000,'beed',156,55); insert into gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values
+(gym_seq.nextval,'Ganesh',28,'12-oct-2023','2-nov-2023',25000,'pune',165,85); insert into
+gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values (gym_seq.nextval,'Piyush',45,'2-oct-2023','28-nov2023',20000,'nanded',165,55); insert into gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values
+(gym_seq.nextval,'Sangram',34,12-july-2023','8-nov-2023',12000,'Kolhapur',154,76); insert into
+gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values (gym_seq.nextval,'Narendra',65,'12-june-2022','8-nov2023',11000,'Satara',134,72); insert into gym_members(id,name,age,joining_date,expiration_date,cost,city,height,weight) values
+(gym_seq.nextval,'Sarita',34,'2-may-2022','8-nov-2023',23000,'delhi',154,76);
+_____________________________________________________________________________________________________________________
+1. select all people whos cost is geater than 20000 select * from gym_members where cost >=20000; ID NAME AGE JOINING_D EXPIRATIO
+COST CITY HEIGHT WEIGHT CREATED_A ---------- -------------------- ---------- --------- --------- ---------- ------------------------------ ---------- ---------- -------
+-- 6 Ganesh 28 12-OCT-23 02-NOV-23 25000 pune 165 85 12-OCT-23 10 Piyush 45 02-OCT-23 28-NOV-23 20000 nanded 165 55 12-OCT-23
+18 Sarita 22 02-MAY-22 08-NOV-23 23000 delhi 134 56 12-OCT-23
+_____________________________________________________________________________________________________________________
+2. select all the people who live in pune select * from gym_members where city='pune'; ID NAME AGE JOINING_D EXPIRATIO COST CITY
+HEIGHT WEIGHT CREATED_A ---------- -------------------- ---------- --------- --------- ---------- ------------------------------ ---------- ---------- --------- 6 Ganesh
+28 12-OCT-23 02-NOV-23 25000 pune 165 85 12-OCT-23
+_____________________________________________________________________________________________________________________
+3. select all the people who live in mumbai and have age >24 select * from gym_members where city='nanded' and age>=20; ID NAME AGE
+JOINING_D EXPIRATIO COST CITY HEIGHT WEIGHT CREATED_A ---------- -------------------- ---------- --------- --------- ---------- --------------------------
+---- ---------- ---------- --------- 10 Piyush 45 02-OCT-23 28-NOV-23 20000 nanded 165 55 12-OCT-23
+_____________________________________________________________________________________________________________________
+4. select all the people who have joined for only 3 months select * from gym_members where months_between(joining_date,expiration_date) = 6;
+no rows selected
+_____________________________________________________________________________________________________________________
+5. fetch name and bmi for all memebers; select name, (weight/((height/100)*(height/100))) as bmi from gym_members; NAME BMI -------------------
+- ---------- Raj 22.600263 Ganesh 31.2213039 Piyush 20.2020202 Sangram 32.0458762 Narendra 40.0980174 Sarita 31.1873468
+_____________________________________________________________________________________________________________________
+6. show all the memebers in descending order of their height SQL> select * from gym_members order by height desc; ID NAME AGE
+JOINING_D EXPIRATIO COST CITY HEIGHT WEIGHT CREATED_A ---------- -------------------- ---------- --------- --------- ---------- --------------------------
+---- ---------- ---------- --------- 10 Piyush 45 02-OCT-23 28-NOV-23 20000 nanded 165 55 12-OCT-23 6 Ganesh 28 12-OCT-23 02-NOV-23 25000
+pune 165 85 12-OCT-23 5 Raj 22 23-OCT-23 12-NOV-23 15000 beed 156 55 12-OCT-23 11 Sangram 34 12-JUL-23 08-NOV-23 12000 Kolhapur
+154 76 12-OCT-23 18 Sarita 22 02-MAY-22 08-NOV-23 23000 delhi 134 56 12-OCT-23 17 Narendra 65 12-JUN-22 08-NOV-23 11000 Satara 134
+72 12-OCT-23 6 rows selected.
+_____________________________________________________________________________________________________________________
+7. show birth year of memembers based on their age for city pune SQL> select name, EXTRACT(YEAR FROM sysdate) - age as BIRTH_YEAR
+from gym_members where city = 'pune'; NAME BIRTH_YEAR -------------------- ---------- Ganesh 1995
+_____________________________________________________________________________________________________________________
